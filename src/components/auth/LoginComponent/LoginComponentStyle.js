@@ -1,0 +1,41 @@
+export const style = {
+    boxStyle:{
+        width:'350px',
+        height:'350px',
+        boxShadow:'1px 1px 5px grey ',
+        margin:'auto',
+        justifyContent:'center',
+        position:'absolute',
+        top:'25%',
+        left:'40%',
+        padding:'20px'
+    },
+    form:{
+        width:'95%',
+        margin:'auto'
+    },
+    labelStyle:{
+        fontSize:'25px'
+    },
+    inputStyle:{
+        width:'100%',
+        height:'25px',
+        fontSize:'18px'
+    },
+    divContainer:{
+        marginTop:'25px'
+    },
+    title:{
+        fontSize:'30px',
+        textAlign:'center'
+    },
+    submit:{
+        with:'25%',
+        border:'none',
+        fontSize:'23px',
+        padding:'10px',
+        margin:'auto',
+        marginTop:'25px',
+        marginLeft:'85px'
+    }
+}
