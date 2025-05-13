@@ -1,9 +1,8 @@
 import React from 'react'
+import { UsuarioComponent } from '../../components'
 
 export function UserView() {
   return (
-    <div>
-        Vista USUARIOS Se crearan usuarios a los "Coordinadores" y "estudiantes"
-    </div>
+    <UsuarioComponent/>
   )
 }

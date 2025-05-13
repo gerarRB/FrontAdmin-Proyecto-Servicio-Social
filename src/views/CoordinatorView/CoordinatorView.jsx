@@ -1,9 +1,7 @@
 import React from 'react'
-
+import { CoordinadorComponent } from '../../components'
 export function CoordinatorView() {
   return (
-    <div>
-        CoordinatorView
-    </div>
+    <CoordinadorComponent/>
   )
 }

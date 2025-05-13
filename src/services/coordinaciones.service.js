@@ -1,6 +1,20 @@
-
 import { httpClient } from "../utils";
 
-const getCoordinaciones = async (params) => await httpClient("coordinaciones", params, "get");
+// Obtener todas las coordinaciones
+const getCoordinaciones = async () => await httpClient.get("/coordinaciones");
 
-export { getCoordinaciones };
+// Crear nueva
+const createCoordinacion = async (data) => await httpClient.post("/coordinaciones", data);
+
+// Actualizar
+const updateCoordinacion = async (id, data) => await httpClient.put(`/coordinaciones/${id}`, data);
+
+// Eliminar
+const deleteCoordinacion = async (id) => await httpClient.delete(`/coordinaciones/${id}`);
+
+export {
+  getCoordinaciones,
+  createCoordinacion,
+  updateCoordinacion,
+  deleteCoordinacion
+};

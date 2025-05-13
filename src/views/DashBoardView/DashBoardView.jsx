@@ -36,14 +36,6 @@ export function DashBoardView() {
               <li className="nav-item">
               <NavLink
                   className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                  to="/users"
-                >
-                  Usuarios
-                </NavLink>
-              </li>
-              <li className="nav-item">
-              <NavLink
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
                   to="/coordinations"
                 >
                   Coordinaciones
@@ -90,7 +82,14 @@ export function DashBoardView() {
                   Estudiantes
                 </NavLink>
               </li>
-          
+              <li className="nav-item">
+              <NavLink
+                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                  to="/users"
+                >
+                  Usuarios
+                </NavLink>
+              </li>
              
             </ul>
 
