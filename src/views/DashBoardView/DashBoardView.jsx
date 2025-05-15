@@ -49,6 +49,14 @@ export function DashBoardView() {
                   Coordinadores
                 </NavLink>
               </li>
+               <li className="nav-item">
+              <NavLink
+                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                  to="/directions"
+                >
+                  Direcciones
+                </NavLink>
+              </li>
               <li className="nav-item">
               <NavLink
                   className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}

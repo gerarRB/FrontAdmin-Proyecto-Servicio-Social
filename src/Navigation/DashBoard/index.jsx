@@ -11,6 +11,7 @@ import { UserView } from "../../views/UserView";
 import { UniversityDegreeView } from "../../views/UniversityDegreeView";
 import { ProjectView } from "../../views/ProjectView";
 import { InstitutionView } from "../../views/InstitutionView";
+import { DirectionView } from "../../views/DirectionView";
 
 
 export default function index() {
@@ -22,6 +23,7 @@ export default function index() {
           <Route path="users" element={< UserView/>} />
           <Route path="coordinations" element={<CoordinationView />} />
           <Route path="coordinators" element={<CoordinatorView />} />
+          <Route path="directions" element={<DirectionView />} />
           <Route path="institutions" element={<InstitutionView />} />
           <Route path="university_degrees" element={<UniversityDegreeView />} />
           <Route path="projects" element={< ProjectView/>} />
