@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { FaEdit } from "react-icons/fa";
-import { getUsers, getRoles, createUser, updateUser } from "../../services";
+import { getUsers, getRoles, createUser, updateUser } from "../../services/usuarios.service";
 
 export function UsuarioComponent() {
   const [users, setUsers] = useState([]);

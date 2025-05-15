@@ -6,7 +6,7 @@ import {
   createCoordinacion,
   updateCoordinacion,
   deleteCoordinacion,
-} from "../../services";
+} from "../../services/coordinaciones.service";
 
 export function CoordinacionComponent() {
   const [coordinaciones, setCoordinaciones] = useState([]);
