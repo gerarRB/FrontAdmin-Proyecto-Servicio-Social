@@ -6,8 +6,7 @@ export function ProjectView() {
     <div>
         <ProyectoComponent/>
    
-        Vista PROYECTOS----Esta relacionada con "Coordinadores", "Instituciones" 
-        al momento de crear/editar/eliminar un proyecto
+     
     </div>
   )
 }

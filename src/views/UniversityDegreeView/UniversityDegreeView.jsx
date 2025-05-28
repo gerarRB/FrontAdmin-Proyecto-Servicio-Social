@@ -4,8 +4,7 @@ export function UniversityDegreeView() {
   return (
     <div>
         <CarreraComponent/>
-        Vista CARRERAS---Esta relacionada con "Coordinaciones" 
-        al momento de crear/editar/eliminar carreras 
+        
     </div>
   )
 }

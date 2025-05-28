@@ -6,7 +6,7 @@ export function InstitutionView() {
      <div>
     <InstitucionComponent/>
    
-        Vista INSTITUCIONES---Esta relacionada con la tabla "departamento", "municipio" y "distrito" 
+       
     </div>
   )
 }
