@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaEnvelope } from "react-icons/fa";
 import {
   getCoordinadores,
   getCoordinaciones,
@@ -8,6 +8,7 @@ import {
   createCoordinador,
   updateCoordinador,
   deleteCoordinador,
+  sendCoordinadorEmail,
 } from "../../services/coordinadores.service";
 
 export function CoordinadorComponent() {
@@ -59,7 +60,7 @@ export function CoordinadorComponent() {
       const selectedUser = users.find(
         (user) => user.id === parseInt(modalData.user_id)
       );
-      if (selectedUser && !modalData.id) {
+      if (selectedUser) {
         setModalData((prev) => ({
           ...prev,
           correo_coordinador: selectedUser.email,
@@ -71,7 +72,7 @@ export function CoordinadorComponent() {
         correo_coordinador: "",
       }));
     }
-  }, [modalData.user_id, users, modalData.id]);
+  }, [modalData.user_id, users]);
 
   const openModal = (
     coordinador = {
@@ -147,6 +148,49 @@ export function CoordinadorComponent() {
     }
   };
 
+  const handleSendEmail = async (id) => {
+    const result = await Swal.fire({
+      title: "¿Enviar correo?",
+      text: "Se enviará un correo al coordinador con sus credenciales.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Sí, enviar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await sendCoordinadorEmail(id);
+        Swal.fire(
+          "Enviado",
+          "El correo ha sido enviado correctamente.",
+          "success"
+        );
+      } catch (error) {
+        if (error.response?.status === 403) {
+          Swal.fire(
+            "Error",
+            "No tienes permiso para enviar correos. Debes ser Super Admin.",
+            "error"
+          );
+        } else if (error.response?.status === 401) {
+          Swal.fire(
+            "Error",
+            "Sesión expirada. Por favor, inicia sesión nuevamente.",
+            "error"
+          );
+        } else {
+          Swal.fire(
+            "Error",
+            error.response?.data?.message ||
+              "Hubo un problema al enviar el correo.",
+            "error"
+          );
+        }
+      }
+    }
+  };
+
   if (loading) return <div>Cargando...</div>;
 
   return (
@@ -172,45 +216,67 @@ export function CoordinadorComponent() {
             <th>Usuario</th>
             <th>Editar</th>
             <th>Eliminar</th>
+            <th>Enviar Correo</th>
           </tr>
         </thead>
         <tbody>
-          {coordinadores.map((coordinador, index) => (
-            <tr key={coordinador.id}>
-              <td>{index + 1}</td>
-              <td>{coordinador.nombre_coordinador}</td>
-              <td>{coordinador.apellido_coordinador}</td>
-              <td>{coordinador.correo_coordinador}</td>
-              <td>{coordinador.telefono_coordinador}</td>
-              <td>
-                {coordinador.coordinacion?.nombre_coordinacion || "Ninguna"}
-              </td>
-              <td>{coordinador.usuario?.name || "Ninguno"}</td>
-              <td>
-                <button
-                  className="btn btn-info me-2"
-                  onClick={() => openModal(coordinador)}
-                >
-                  <FaEdit />
-                </button>
-              </td>
-              <td>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => handleDelete(coordinador.id)}
-                >
-                  <FaTrash />
-                </button>
+          {coordinadores.length > 0 ? (
+            coordinadores.map((coordinador, index) => (
+              <tr key={coordinador.id}>
+                <td>{index + 1}</td>
+                <td>{coordinador.nombre_coordinador}</td>
+                <td>{coordinador.apellido_coordinador}</td>
+                <td>{coordinador.correo_coordinador}</td>
+                <td>{coordinador.telefono_coordinador}</td>
+                <td>
+                  {coordinador.coordinacion?.nombre_coordinacion || "Ninguna"}
+                </td>
+                <td>{coordinador.usuario?.name || "Ninguno"}</td>
+                <td>
+                  <button
+                    className="btn btn-info me-2"
+                    onClick={() => openModal(coordinador)}
+                  >
+                    <FaEdit />
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDelete(coordinador.id)}
+                  >
+                    <FaTrash />
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => handleSendEmail(coordinador.id)}
+                    disabled={!coordinador.correo_coordinador}
+                    title={
+                      coordinador.correo_coordinador
+                        ? "Enviar correo"
+                        : "Correo no disponible"
+                    }
+                  >
+                    <FaEnvelope />
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="10" className="text-center">
+                No hay coordinadores disponibles
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 
       {showModal && (
         <>
           <div className="modal-backdrop fade show"></div>
-
           <div
             className="modal fade show d-block"
             tabIndex="-1"
@@ -287,6 +353,36 @@ export function CoordinadorComponent() {
                     />
                   </div>
                   <div className="mb-3">
+                    <label htmlFor="user_id" className="form-label">
+                      Usuario
+                    </label>
+                    <select
+                      className="form-select"
+                      id="user_id"
+                      value={modalData.user_id}
+                      onChange={(e) =>
+                        setModalData({ ...modalData, user_id: e.target.value })
+                      }
+                      required
+                    >
+                      <option value="">Seleccione un usuario</option>
+                      {users
+                        .filter((user) => user.roles.includes("Admin"))
+                        .map((user) => (
+                          <option key={user.id} value={user.id}>
+                            {user.name} ({user.email})
+                          </option>
+                        ))}
+                    </select>
+                    {users.filter((user) => user.roles.includes("Admin"))
+                      .length === 0 && (
+                      <div className="form-text text-danger">
+                        No hay usuarios disponibles con rol Admin. Crea un
+                        usuario primero.
+                      </div>
+                    )}
+                  </div>
+                  <div className="mb-3">
                     <label htmlFor="correo_coordinador" className="form-label">
                       Correo
                     </label>
@@ -350,29 +446,12 @@ export function CoordinadorComponent() {
                         </option>
                       ))}
                     </select>
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="user_id" className="form-label">
-                      Usuario
-                    </label>
-                    <select
-                      className="form-select"
-                      id="user_id"
-                      value={modalData.user_id}
-                      onChange={(e) =>
-                        setModalData({ ...modalData, user_id: e.target.value })
-                      }
-                      required
-                    >
-                      <option value="">Seleccione un usuario</option>
-                      {users
-                        .filter((user) => user.roles.includes("Admin"))
-                        .map((user) => (
-                          <option key={user.id} value={user.id}>
-                            {user.name} ({user.email})
-                          </option>
-                        ))}
-                    </select>
+                    {coordinaciones.length === 0 && (
+                      <div className="form-text text-danger">
+                        No hay coordinaciones disponibles. Crea una coordinación
+                        primero.
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="modal-footer">

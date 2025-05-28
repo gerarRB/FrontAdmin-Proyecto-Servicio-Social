@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -26,79 +26,85 @@ export function DashBoardView() {
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
-              <NavLink
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                <NavLink
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? "active" : ""}`
+                  }
                   to="/home"
                 >
                   Inicio
                 </NavLink>
               </li>
               <li className="nav-item">
-              <NavLink
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                  to="/coordinations"
+                <NavLink
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? "active" : ""}`
+                  }
+                  to="/users"
                 >
-                  Coordinaciones
+                  Usuarios
                 </NavLink>
               </li>
               <li className="nav-item">
-              <NavLink
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                <NavLink
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? "active" : ""}`
+                  }
                   to="/coordinators"
                 >
                   Coordinadores
                 </NavLink>
               </li>
-               <li className="nav-item">
-              <NavLink
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                  to="/directions"
-                >
-                  Direcciones
-                </NavLink>
-              </li>
               <li className="nav-item">
-              <NavLink
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                  to="/institutions"
-                >
-                  Instituciones
-                </NavLink>
-              </li>
-              
-              <li className="nav-item">
-              <NavLink
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                  to="/university_degrees"
-                >
-                  Carreras
-                </NavLink>
-              </li>
-              <li className="nav-item">
-              <NavLink
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                  to="/projects"
-                >
-                  Proyectos
-                </NavLink>
-              </li>
-              <li className="nav-item">
-              <NavLink
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                <NavLink
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? "active" : ""}`
+                  }
                   to="/students"
                 >
                   Estudiantes
                 </NavLink>
               </li>
               <li className="nav-item">
-              <NavLink
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                  to="/users"
+                <NavLink
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? "active" : ""}`
+                  }
+                  to="/institutions"
                 >
-                  Usuarios
+                  Instituciones
                 </NavLink>
               </li>
-             
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? "active" : ""}`
+                  }
+                  to="/projects"
+                >
+                  Proyectos
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? "active" : ""}`
+                  }
+                  to="/university_degrees"
+                >
+                  Carreras
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? "active" : ""}`
+                  }
+                  to="/coordinations"
+                >
+                  Coordinaciones
+                </NavLink>
+              </li>
             </ul>
 
             <ul className="navbar-nav mb-2 mb-lg-0 ms-auto">
@@ -110,7 +116,7 @@ export function DashBoardView() {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                 {user?.email}
+                  {user?.email}
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end">
                   <li>
@@ -118,7 +124,6 @@ export function DashBoardView() {
                       Cerrar sesion
                     </Link>
                   </li>
-                 
                 </ul>
               </li>
             </ul>
